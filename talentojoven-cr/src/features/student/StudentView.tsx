@@ -1,42 +1,29 @@
-import { useId, useState } from "react";
+import { useState } from "react";
 import { Award, FileText, Link2 } from "lucide-react";
 import { COURSES } from "../../data/courses";
+import { COURSE_POINTS, STUDENT } from "../../data/student";
 import type { Course } from "../../types";
 import { AREAS, CONTRACTS } from "../../data/jobs";
 import { Card } from "../../components/ui/Card";
 import { Chip } from "../../components/ui/Chip";
 import { Button } from "../../components/ui/Button";
+import { EmptyState } from "../../components/ui/EmptyState";
 import { ProgressBar } from "../../components/ui/ProgressBar";
 import { SectionTitle } from "../../components/ui/SectionTitle";
+import { Select } from "../../components/ui/Select";
 import { cn } from "../../lib/cn";
 import { CvModal } from "./CvModal";
 import { JobCard } from "./JobCard";
 import { useJobFilters } from "./useJobFilters";
 
-// 72 de base + 7 por curso: con los 4 cursos el perfil llega a 100.
-const COURSE_POINTS = 7;
-
 const LOGO_BG: Record<Course["tone"], string> = { primary: "bg-primary", progress: "bg-progress", analysis: "bg-analysis", warning: "bg-warning" };
-
-// La etiqueta solo la lee el lector de pantalla; las opciones ("Todas", "Todos") no bastan como nombre.
-const Select = ({ label, value, onChange, options }: { label: string; value: string; onChange: (v: string) => void; options: string[] }) => {
-  const id = useId();
-  return (
-    <>
-      <label htmlFor={id} className="sr-only">{label}</label>
-      <select id={id} value={value} onChange={(e) => onChange(e.target.value)} className="rounded-lg border border-control bg-surface px-3 py-2 text-sm">
-        {options.map((o) => <option key={o}>{o}</option>)}
-      </select>
-    </>
-  );
-};
 
 export function StudentView() {
   const [showCv, setShowCv] = useState(false);
   const [applied, setApplied] = useState<Set<number>>(new Set());
   const [started, setStarted] = useState<Set<string>>(new Set());
   const f = useJobFilters();
-  const score = Math.min(72 + started.size * COURSE_POINTS, 100);
+  const score = Math.min(STUDENT.baseScore + started.size * COURSE_POINTS, 100);
   const add = <T,>(s: Set<T>, v: T) => new Set(s).add(v);
 
   return (
@@ -44,13 +31,13 @@ export function StudentView() {
       <div className="space-y-5">
         <Card>
           <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-analysis font-bold text-white" aria-hidden>VM</div>
-            <div><div className="font-bold">Valeria Mora Campos</div><div className="text-sm text-muted">Estudiante · UCR</div></div>
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-analysis font-bold text-white" aria-hidden>{STUDENT.initials}</div>
+            <div><div className="font-bold">{STUDENT.name}</div><div className="text-sm text-muted">Estudiante · {STUDENT.institution}</div></div>
           </div>
-          <div className="mt-4"><Chip tone="success"><Link2 size={12} aria-hidden /> Conectado a eMatrícula UCR</Chip></div>
-          <p className="mt-3 text-sm">Licenciatura en Ingeniería en Computación</p>
-          <div className="mt-2 flex justify-between text-sm"><span className="text-muted">Avance de carrera</span><b>85 %</b></div>
-          <ProgressBar className="mt-1" value={85} label="Avance de carrera" tone="progress" />
+          <div className="mt-4"><Chip tone="success"><Link2 size={12} aria-hidden /> Conectado a eMatrícula {STUDENT.institution}</Chip></div>
+          <p className="mt-3 text-sm">{STUDENT.career}</p>
+          <div className="mt-2 flex justify-between text-sm"><span className="text-muted">Avance de carrera</span><b>{STUDENT.careerProgress} %</b></div>
+          <ProgressBar className="mt-1" value={STUDENT.careerProgress} label="Avance de carrera" tone="progress" />
           <p className="mt-3 text-xs text-muted">Compatible con UCR, TEC, UNA, UNED, UTN, CUC e INA. Datos verificados por la institución.</p>
         </Card>
 
@@ -58,7 +45,7 @@ export function StudentView() {
           <div className="text-sm text-muted">Puntaje de perfil</div>
           <div className="text-3xl font-extrabold">{score}<span className="text-base text-muted">/100</span></div>
           <ProgressBar className="mt-3" value={score} label="Puntaje de perfil" />
-          <p className="mt-2 text-xs text-muted">72 puntos base por tu perfil académico verificado, más {COURSE_POINTS} por cada curso en el que te inscribes.</p>
+          <p className="mt-2 text-xs text-muted">{STUDENT.baseScore} puntos base por tu perfil académico verificado, más {COURSE_POINTS} por cada curso en el que te inscribes.</p>
           <Button className="mt-4 w-full justify-center" onClick={() => setShowCv(true)}><FileText size={16} aria-hidden /> Generar CV estándar Harvard</Button>
         </Card>
 
@@ -97,7 +84,7 @@ export function StudentView() {
         </div>
         <div className="space-y-3">
           {f.jobs.map((j) => <JobCard key={j.id} job={j} applied={applied.has(j.id)} onApply={(id) => setApplied((s) => add(s, id))} />)}
-          {f.jobs.length === 0 && <Card className="p-8 text-center text-muted">Ninguna vacante coincide. Quita un filtro para ver más.</Card>}
+          {f.jobs.length === 0 && <EmptyState message="Ninguna vacante coincide con los filtros." action={<Button variant="ghost" onClick={f.reset}>Quitar filtros</Button>} />}
         </div>
       </div>
       {showCv && <CvModal onClose={() => setShowCv(false)} />}

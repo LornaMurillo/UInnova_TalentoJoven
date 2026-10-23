@@ -1,26 +1,48 @@
-import { useState } from "react";
-import type { Role } from "./types";
+import { useEffect, type ReactNode } from "react";
+import { Link, Navigate, Route, Routes } from "react-router-dom";
+import { PROFILES } from "./app/profiles";
 import { Header } from "./components/layout/Header";
-import { StudentView } from "./features/student/StudentView";
-import { CompanyView } from "./features/company/CompanyView";
-import { GovernmentView } from "./features/government/GovernmentView";
+import { ErrorState } from "./components/ui/ErrorState";
+import { buttonStyles } from "./components/ui/buttonStyles";
 
-const TITLES: Record<Role, string> = {
-  student: "Tu primer empleo empieza aquí",
-  company: "Contrata talento joven con incentivos",
-  government: "Impacto nacional del programa",
-};
+const HOME = PROFILES[0].path;
 
-export default function App() {
-  const [role, setRole] = useState<Role>("student");
+// h1 de la página; el título de la pestaña lo acompaña para que la URL compartida se reconozca.
+function Page({ title, children }: { title: string; children: ReactNode }) {
+  useEffect(() => {
+    document.title = `${title} · TalentoJoven CR`;
+  }, [title]);
   return (
     <>
-      <Header role={role} onChange={setRole} />
+      <h1 className="mb-5 text-2xl font-extrabold tracking-tight sm:text-3xl">{title}</h1>
+      {children}
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <>
+      <Header />
       <main className="mx-auto max-w-7xl px-4 py-6">
-        <h1 className="mb-5 text-2xl font-extrabold tracking-tight sm:text-3xl">{TITLES[role]}</h1>
-        {role === "student" && <StudentView />}
-        {role === "company" && <CompanyView />}
-        {role === "government" && <GovernmentView />}
+        <Routes>
+          <Route index element={<Navigate to={HOME} replace />} />
+          {PROFILES.map(({ path, title, View }) => (
+            <Route key={path} path={path} element={<Page title={title}><View /></Page>} />
+          ))}
+          <Route
+            path="*"
+            element={
+              <Page title="Página no encontrada">
+                <ErrorState
+                  title="Esta dirección no existe"
+                  message="Revisa el enlace o vuelve a uno de los perfiles del prototipo."
+                  action={<Link to={HOME} className={buttonStyles()}>Ir a Estudiante</Link>}
+                />
+              </Page>
+            }
+          />
+        </Routes>
       </main>
     </>
   );

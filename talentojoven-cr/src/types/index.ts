@@ -1,5 +1,3 @@
-export type Role = "student" | "company" | "government";
-
 export type ContractType = "Pasantía" | "Contrato a prueba";
 
 export interface Job {
@@ -29,6 +27,25 @@ export interface Applicant {
   status: "Nueva" | "Revisión" | "Entrevista";
   match: number;
   jobId: number;
+}
+
+export interface Agreement {
+  university: string;
+  company: string;
+  status: "Vigente" | "En revisión";
+}
+
+export interface Kpi {
+  id: "hires" | "companies" | "funds" | "retention";
+  label: string;
+  value: string;
+  hint: string;
+}
+
+export interface HiringStep {
+  title: string;
+  detail: string;
+  state: "done" | "current" | "pending";
 }
 
 export interface BarDatum {

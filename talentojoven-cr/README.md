@@ -20,7 +20,7 @@ npm install
 npm run dev
 ```
 
-Abre la dirección que muestra la terminal (normalmente http://localhost:5173) y usa el selector de perfil de la barra superior.
+Abre la dirección que muestra la terminal (normalmente http://localhost:5173) y usa el selector de perfil de la barra superior. Cada perfil tiene su propia dirección: `/estudiante`, `/empresa` e `/institucion`; cualquier otra muestra una página 404.
 
 | Comando | Qué hace |
 |---|---|
@@ -28,6 +28,10 @@ Abre la dirección que muestra la terminal (normalmente http://localhost:5173) y
 | `npm run typecheck` | Revisa los tipos de TypeScript |
 | `npm run build` | Revisa tipos y genera la versión de producción en `dist/` |
 | `npm run preview` | Sirve la versión de producción para probarla |
+| `npm run lint` | Revisa el código con ESLint |
+| `npm test` | Corre las pruebas (Vitest, Testing Library y jest-axe) |
+
+La integración continua (`.github/workflows/ci.yml`) corre `npm ci`, typecheck, lint, pruebas y build en cada PR.
 
 ## Las tres vistas
 
@@ -43,15 +47,17 @@ Abre la dirección que muestra la terminal (normalmente http://localhost:5173) y
 src/
 ├── components/
 │   ├── layout/        Header con selector de perfil
-│   └── ui/            Button, Card, Chip, Modal, SectionTitle (reutilizables)
+│   └── ui/            Button, Card, Chip, Modal, Select, StatusBadge, ChartCard, EmptyState, ErrorState…
 ├── features/          Un módulo por perfil, con sus componentes y hooks
 │   ├── student/       StudentView, JobCard, CvModal, useJobFilters
 │   ├── company/       CompanyView, HiringTimeline
-│   └── government/    GovernmentView, KpiCard, HiresChart
-├── data/              Datos de ejemplo (jobs, courses, stats)
+│   └── government/    GovernmentView, KpiCard
+├── app/               Perfiles y rutas (profiles.ts)
+├── data/              Datos de ejemplo y cifras del programa (jobs, courses, stats, student, program)
 ├── types/             Tipos de TypeScript compartidos
-├── lib/               Utilidades (cn)
-├── App.tsx            Selección de perfil
+├── lib/               Utilidades (cn, format)
+├── test/              Configuración y pruebas de accesibilidad
+├── App.tsx            Rutas por perfil y página 404
 └── main.tsx           Punto de entrada
 ```
 
@@ -79,8 +85,8 @@ Abre la app a pantalla completa (F11), elige cada perfil y captura. En Estudiant
 
 - Las postulaciones y los cursos iniciados no se guardan al recargar.
 - Sin autenticación real: el selector de perfil es una simulación.
-- Siguientes pasos sugeridos: enrutamiento por perfil (React Router), API real o mock con MSW, pruebas con Vitest y Testing Library, y ESLint y Prettier.
+- Siguientes pasos sugeridos: API real o mock con MSW, y división del bundle (Recharts) para bajar de 500 kB.
 
 ## Tecnologías
 
-React 18, TypeScript, Vite, Tailwind CSS 3, Lucide React y Recharts.
+React 18, TypeScript, Vite, Tailwind CSS 3, React Router, Radix Dialog, Lucide React y Recharts. Pruebas con Vitest.

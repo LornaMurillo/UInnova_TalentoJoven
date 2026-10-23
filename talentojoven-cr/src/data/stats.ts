@@ -1,4 +1,6 @@
-import type { Applicant, BarDatum } from "../types";
+import type { Agreement, Applicant, BarDatum, HiringStep, Kpi } from "../types";
+import { percent } from "../lib/format";
+import { SUBSIDY_RATES } from "./program";
 
 // Instituciones con verificación académica conectada (el INA no es universidad).
 export const INSTITUTIONS = ["UCR", "TEC", "UNA", "UNED", "UTN", "CUC", "INA"];
@@ -33,9 +35,31 @@ export const APPLICANTS: Applicant[] = [
 // Contratación en curso que se muestra en la vista "Empresa".
 export const ACTIVE_HIRE = { name: "Andrés Quesada", jobId: 6, month: 4 };
 
-export const AGREEMENTS = [
+export const AGREEMENTS: Agreement[] = [
   { university: "UCR", company: "Banco Horizonte", status: "Vigente" },
   { university: "TEC", company: "Semicon Valle Central", status: "Vigente" },
   { university: "UNED", company: "Alimentos La Meseta", status: "Vigente" },
   { university: "UTN", company: "Bebidas del Trópico", status: "En revisión" },
+];
+
+// Etapas de ACTIVE_HIRE en la vista "Empresa".
+export const HIRING_STEPS: HiringStep[] = [
+  { title: "Fase 1 · Meses 1–3", detail: `Subsidio decreciente: ${SUBSIDY_RATES.map(percent).join(" → ")}. Coach: Lic. Andrea Solano (operador Empléate).`, state: "done" },
+  { title: "Mes 6 · Bono de permanencia", detail: "Verificación automática con la CCSS programada para el 14 de enero.", state: "current" },
+  { title: "Mes 12 · Bono de permanencia", detail: "Se libera tras confirmar planilla vigente en la CCSS.", state: "pending" },
+];
+
+// Indicadores nacionales de la vista "Universidad / MTSS".
+export const KPIS: Kpi[] = [
+  { id: "hires", label: "Estudiantes contratados", value: "1.645", hint: "+18 % vs. trimestre anterior" },
+  { id: "companies", label: "Empresas con convenio", value: "214", hint: "38 nuevas este año" },
+  { id: "funds", label: "Fondos ejecutados", value: "₡ 1.240 M", hint: "62 % del presupuesto anual" },
+  { id: "retention", label: "Retención a 12 meses", value: "87 %", hint: "Verificada con la CCSS" },
+];
+
+// Últimas verificaciones de matrícula.
+export const VERIFICATIONS = [
+  { name: "Andrea Castro", institution: "TEC" },
+  { name: "José Pablo Ulate", institution: "UNA" },
+  { name: "Melissa Brenes", institution: "INA" },
 ];
