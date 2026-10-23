@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 import { Award, FileText, Link2, TrendingUp } from "lucide-react";
 import { COURSES } from "../../data/courses";
 import { AREAS, CONTRACTS } from "../../data/jobs";
@@ -14,11 +14,18 @@ import { useJobFilters } from "./useJobFilters";
 // 72 de base + 7 por curso: con los 4 cursos el perfil llega a 100.
 const COURSE_POINTS = 7;
 
-const Select =({ value, onChange, options }: { value: string; onChange: (v: string) => void; options: string[] }) => (
-  <select value={value} onChange={(e) => onChange(e.target.value)} className="rounded-lg border border-line bg-soft px-3 py-2 text-sm">
-    {options.map((o) => <option key={o}>{o}</option>)}
-  </select>
-);
+// La etiqueta solo la lee el lector de pantalla; las opciones ("Todas", "Todos") no bastan como nombre.
+const Select = ({ label, value, onChange, options }: { label: string; value: string; onChange: (v: string) => void; options: string[] }) => {
+  const id = useId();
+  return (
+    <>
+      <label htmlFor={id} className="sr-only">{label}</label>
+      <select id={id} value={value} onChange={(e) => onChange(e.target.value)} className="rounded-lg border border-line bg-soft px-3 py-2 text-sm">
+        {options.map((o) => <option key={o}>{o}</option>)}
+      </select>
+    </>
+  );
+};
 
 export function StudentView() {
   const [showCv, setShowCv] = useState(false);
@@ -78,8 +85,8 @@ export function StudentView() {
       <div className="lg:col-span-2">
         <SectionTitle title="Vacantes y pasantías para ti" subtitle={`${f.jobs.length} oportunidades · coinciden con tu carrera`} />
         <div className="mb-4 flex flex-wrap gap-2">
-          <Select value={f.area} onChange={f.setArea} options={AREAS} />
-          <Select value={f.contract} onChange={f.setContract} options={CONTRACTS} />
+          <Select label="Área" value={f.area} onChange={f.setArea} options={AREAS} />
+          <Select label="Tipo de contrato" value={f.contract} onChange={f.setContract} options={CONTRACTS} />
           <button
             aria-pressed={f.sealOnly}
             onClick={() => f.setSealOnly(!f.sealOnly)}

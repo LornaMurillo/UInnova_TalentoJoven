@@ -6,3 +6,9 @@
   body { @apply bg-white font-sans text-ink antialiased; }
   :focus-visible { outline: 2px solid #6366F1; outline-offset: 2px; }
 }
+
+/* Con un modal abierto se imprime solo el modal (p. ej. el CV). */
+@media print {
+  @page { margin: 1.5cm; }
+  body:has(> .modal-root) > :not(.modal-root) { display: none; }
+}

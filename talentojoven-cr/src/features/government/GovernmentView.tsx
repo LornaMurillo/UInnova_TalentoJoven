@@ -18,13 +18,14 @@ export function GovernmentView() {
         <KpiCard icon={ShieldCheck} label="Retención a 12 meses" value="87 %" hint="Verificada con la CCSS" />
       </div>
       <div className="grid gap-5 lg:grid-cols-2">
-        <Card><SectionTitle title="Contrataciones por institución" /><HiresChart data={HIRES_BY_INSTITUTION} /></Card>
-        <Card><SectionTitle title="Contrataciones por área" /><HiresChart data={HIRES_BY_AREA} /></Card>
+        <Card><SectionTitle title="Contrataciones por institución" /><HiresChart title="Contrataciones por institución" category="Institución" data={HIRES_BY_INSTITUTION} /></Card>
+        <Card><SectionTitle title="Contrataciones por área" /><HiresChart title="Contrataciones por área" category="Área" data={HIRES_BY_AREA} /></Card>
       </div>
       <div className="grid gap-5 lg:grid-cols-2">
         <Card>
           <SectionTitle title="Convenios académico-empresariales" />
-          <table className="w-full text-sm">
+          <table className="w-full text-left text-sm">
+            <thead className="text-muted"><tr><th className="py-2">Institución</th><th>Empresa</th><th className="text-right">Estado</th></tr></thead>
             <tbody>
               {AGREEMENTS.map((a) => (
                 <tr key={a.university} className="border-t border-line">

@@ -1,6 +1,6 @@
 # TalentoJoven CR
 
-Prototipo interactivo de una propuesta de innovación pública que conecta a estudiantes y graduados de universidades costarricenses con empresas privadas, con un esquema de incentivos para las empresas:
+Prototipo interactivo de una propuesta de innovación pública que conecta a jóvenes estudiantes y graduados de universidades costarricenses y del INA con empresas privadas, con un esquema de incentivos para las empresas:
 
 1. **Meses 1-3:** contrato a prueba acompañado (subsidio decreciente y coaching).
 2. **Meses 6 y 12:** bono de permanencia verificado con la CCSS.
@@ -33,7 +33,7 @@ Abre la dirección que muestra la terminal (normalmente http://localhost:5173) y
 
 | Perfil | Contenido |
 |---|---|
-| **Estudiante** | Conexión con eMatrícula y avance de carrera, puntaje de perfil, CV estándar Harvard en modal, feed de vacantes con filtros y métricas de impacto, cursos gratuitos de Cisco, Google, AWS y Microsoft |
+| **Estudiante** | Conexión con eMatrícula y avance de carrera, puntaje de perfil, CV estándar Harvard en modal (se imprime o guarda como PDF), feed de vacantes con filtros y métricas de impacto, cursos gratuitos de Cisco, Google, AWS y Microsoft |
 | **Empresa** | Vacantes y postulaciones, Sello Empleador Joven con puntos SICOP, línea de tiempo del incentivo, red de convenios |
 | **Universidad / MTSS** | KPIs globales, contrataciones por institución y área (Recharts), convenios y verificación estudiantil |
 
@@ -63,7 +63,7 @@ src/
 - **TypeScript estricto** y tipos compartidos en `src/types`.
 - **Lógica en hooks:** los filtros de vacantes viven en `useJobFilters`.
 - **Diseño con tokens** en `tailwind.config.js` (colores `royal`, `teal`, `line`, `soft`, etc.). Cambia ahí la paleta, no en cada componente.
-- **Accesibilidad básica:** modal con rol de diálogo y cierre con Escape, `aria-pressed` en filtros, foco visible.
+- **Accesibilidad básica:** filtros con etiqueta, gráficos con tabla de datos para lectores de pantalla, modal que retiene el foco, cierra con Escape y devuelve el foco al botón que lo abrió, `aria-pressed` en filtros, `thead` en las tablas y foco visible.
 
 ## Personalizar
 
