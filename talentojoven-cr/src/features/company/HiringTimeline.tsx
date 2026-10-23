@@ -3,7 +3,7 @@ import { cn } from "../../lib/cn";
 
 type State = "done" | "current" | "pending";
 const steps: { title: string; detail: string; state: State }[] = [
-  { title: "Fase 1 · Meses 1–3", detail: "Subsidio decreciente: 60 % → 40 % → 20 %. Coach: Lic. Andrea Solano (MTSS).", state: "done" },
+  { title: "Fase 1 · Meses 1–3", detail: "Subsidio decreciente: 60 % → 40 % → 20 %. Coach: Lic. Andrea Solano (operador Empléate).", state: "done" },
   { title: "Mes 6 · Bono de permanencia", detail: "Verificación automática con la CCSS programada para el 14 de enero.", state: "current" },
   { title: "Mes 12 · Bono de permanencia", detail: "Se libera tras confirmar planilla vigente en la CCSS.", state: "pending" },
 ];

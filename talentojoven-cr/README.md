@@ -6,7 +6,7 @@ Prototipo interactivo de una propuesta de innovación pública que conecta a est
 2. **Meses 6 y 12:** bono de permanencia verificado con la CCSS.
 3. **Largo plazo:** Sello Empleador Joven con puntos preferenciales en compras públicas (SICOP).
 
-> Todos los datos son **ficticios** y viven en `src/data`. No hay backend ni integraciones reales con eMatrícula, CCSS o SICOP.
+> Todos los datos son **ficticios** y viven en `src/data`, incluidas las empresas (la vista Empresa usa `DEMO_COMPANY` de `jobs.ts`). La barra superior lo indica con la etiqueta "Prototipo · datos simulados". No hay backend ni integraciones reales con eMatrícula, CCSS o SICOP.
 
 ## Requisitos
 

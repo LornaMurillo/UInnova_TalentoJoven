@@ -10,7 +10,7 @@ export function CvModal({ onClose }: { onClose: () => void }) {
     <Modal title="Vista previa · CV estándar Harvard" onClose={onClose} actions={<Button>Descargar PDF</Button>}>
       <article className="rounded-lg border border-slate-200 bg-white p-8 font-serif text-[13.5px] leading-relaxed text-slate-900">
         <h3 className="text-center text-2xl font-bold">Valeria Mora Campos</h3>
-        <p className="mb-4 text-center text-xs text-slate-600">San José, Costa Rica · valeria.mora@ucr.ac.cr · linkedin.com/in/valeriamora</p>
+        <p className="mb-4 text-center text-xs text-slate-600">San José, Costa Rica · valeria.mora@ejemplo.cr · linkedin.com/in/valeria-mora-ejemplo</p>
         <H>Educación</H>
         <p><b>Universidad de Costa Rica</b> — Licenciatura en Ingeniería en Computación (85 % completado) <span className="float-right">2021 – 2026</span></p>
         <p className="mb-3">Promedio ponderado 8,9 · Beca de excelencia académica</p>

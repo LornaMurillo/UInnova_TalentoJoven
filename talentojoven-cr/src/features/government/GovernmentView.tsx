@@ -6,7 +6,7 @@ import { SectionTitle } from "../../components/ui/SectionTitle";
 import { HiresChart } from "./HiresChart";
 import { KpiCard } from "./KpiCard";
 
-const PENDING = [["Valeria Mora", "UCR"], ["Diego Araya", "TEC"], ["Kevin Rojas", "UTN"]];
+const VERIFIED = [["Andrea Castro", "TEC"], ["José Pablo Ulate", "UNA"], ["Melissa Brenes", "INA"]];
 
 export function GovernmentView() {
   return (
@@ -36,8 +36,8 @@ export function GovernmentView() {
           </table>
         </Card>
         <Card>
-          <SectionTitle title="Verificación estudiantil" subtitle="Solicitudes pendientes de las universidades" />
-          {PENDING.map(([name, uni]) => (
+          <SectionTitle title="Verificación estudiantil" subtitle="Últimas verificaciones de matrícula con las instituciones" />
+          {VERIFIED.map(([name, uni]) => (
             <div key={name} className="flex items-center justify-between border-t border-line py-2 text-sm">
               <span><b>{name}</b> <span className="text-muted">· {uni}</span></span>
               <Chip tone="teal"><Check size={12} /> Matrícula verificada</Chip>
