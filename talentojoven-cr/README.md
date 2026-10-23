@@ -33,6 +33,23 @@ Abre la dirección que muestra la terminal (normalmente http://localhost:5173) y
 
 La integración continua (`.github/workflows/ci.yml`) corre `npm ci`, typecheck, lint, pruebas y build en cada PR.
 
+## Publicar en Vercel
+
+La configuración vive en `vercel.json`: instala con `npm ci --ignore-scripts`, corre `npm run build` y publica `dist/`. Además:
+
+- Envía cualquier ruta que no sea un archivo a `index.html`, para que `/empresa` o `/institucion` abran bien al recargar o compartir el enlace.
+- Guarda en caché por un año los archivos de `assets/`, que llevan un hash en el nombre.
+- Agrega encabezados de seguridad básicos.
+
+Para crear el proyecto:
+
+1. En Vercel, **Add New → Project** e importa el repositorio de GitHub.
+2. En **Root Directory** elige `talentojoven-cr`. Vercel detecta Vite y toma el resto de `vercel.json`.
+3. En **Node.js Version** usa 22.x, la misma que la CI.
+4. Pulsa **Deploy**. Cada push a `main` publica a producción y cada PR recibe su propia vista previa.
+
+No hace falta configurar variables de entorno: el prototipo no tiene backend.
+
 ## Las tres vistas
 
 | Perfil | Contenido |
@@ -79,7 +96,7 @@ src/
 
 ## Capturas para las láminas
 
-Abre la app a pantalla completa (F11), elige cada perfil y captura. En Estudiante, abre también el modal del CV.
+Abre la app a pantalla completa (F11), entra a `/estudiante`, `/empresa` e `/institucion` y captura cada una. En Estudiante, abre también el modal del CV.
 
 ## Limitaciones y próximos pasos
 

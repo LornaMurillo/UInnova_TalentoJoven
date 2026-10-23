@@ -21,7 +21,7 @@ export function CompanyView() {
 
   return (
     <div className="grid gap-5 lg:grid-cols-3">
-      <div className="space-y-5 lg:col-span-2">
+      <div className="min-w-0 space-y-5 lg:col-span-2">
         <Card>
           <SectionTitle title="Vacantes activas" subtitle={`${DEMO_COMPANY} · Reclutamiento`} />
           <div className="mb-4 flex flex-wrap gap-2">
