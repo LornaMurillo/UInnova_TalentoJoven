@@ -4,12 +4,12 @@ import type { Applicant, BarDatum } from "../types";
 export const INSTITUTIONS = ["UCR", "TEC", "UNA", "UNED", "UTN", "CUC", "INA"];
 
 export const HIRES_BY_INSTITUTION: BarDatum[] = [
-  { name: "UCR", value: 412, color: "#2563EB" },
-  { name: "INA", value: 342, color: "#6366F1" },
-  { name: "TEC", value: 268, color: "#0D9488" },
-  { name: "UNA", value: 231, color: "#2563EB" },
-  { name: "UTN", value: 205, color: "#6366F1" },
-  { name: "UNED", value: 187, color: "#0D9488" },
+  { name: "UCR", value: 412 },
+  { name: "INA", value: 342 },
+  { name: "TEC", value: 268 },
+  { name: "UNA", value: 231 },
+  { name: "UTN", value: 205 },
+  { name: "UNED", value: 187 },
 ];
 
 export const HIRES_BY_AREA: BarDatum[] = [

@@ -59,14 +59,14 @@ export function Modal({ title, onClose, actions, children }: Props) {
         aria-labelledby={titleId}
         tabIndex={-1}
         onKeyDown={onKeyDown}
-        className="max-h-[90vh] w-full max-w-2xl overflow-auto rounded-2xl border border-line bg-white focus:outline-none print:max-h-none print:max-w-none print:overflow-visible print:rounded-none print:border-0"
+        className="max-h-[90vh] w-full max-w-2xl overflow-auto rounded-2xl border border-line bg-surface focus:outline-none print:max-h-none print:max-w-none print:overflow-visible print:rounded-none print:border-0"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between border-b border-line p-4 print:hidden">
           <b id={titleId}>{title}</b>
           <div className="flex gap-2">
             {actions}
-            <Button variant="ghost" aria-label="Cerrar" onClick={onClose}><X size={16} /></Button>
+            <Button variant="ghost" aria-label="Cerrar" onClick={onClose}><X size={16} aria-hidden /></Button>
           </div>
         </div>
         <div className="p-4 print:p-0">{children}</div>

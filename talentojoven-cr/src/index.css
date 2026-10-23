@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 @layer base {
-  body { @apply bg-white font-sans text-ink antialiased; }
-  :focus-visible { outline: 2px solid #6366F1; outline-offset: 2px; }
+  body { @apply bg-page font-sans text-ink antialiased; }
+  :focus-visible { outline: 2px solid theme("colors.primary.strong"); outline-offset: 2px; }
 }
 
 /* Con un modal abierto se imprime solo el modal (p. ej. el CV). */

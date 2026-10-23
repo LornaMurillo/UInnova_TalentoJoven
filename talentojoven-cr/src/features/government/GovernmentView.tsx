@@ -30,7 +30,7 @@ export function GovernmentView() {
               {AGREEMENTS.map((a) => (
                 <tr key={a.university} className="border-t border-line">
                   <td className="py-3 font-semibold">{a.university}</td><td>{a.company}</td>
-                  <td className="text-right"><Chip tone={a.status === "Vigente" ? "teal" : "blue"}>{a.status}</Chip></td>
+                  <td className="text-right"><Chip tone={a.status === "Vigente" ? "progress" : "warning"}>{a.status}</Chip></td>
                 </tr>
               ))}
             </tbody>
@@ -41,7 +41,7 @@ export function GovernmentView() {
           {VERIFIED.map(([name, uni]) => (
             <div key={name} className="flex items-center justify-between border-t border-line py-2 text-sm">
               <span><b>{name}</b> <span className="text-muted">· {uni}</span></span>
-              <Chip tone="teal"><Check size={12} /> Matrícula verificada</Chip>
+              <Chip tone="success"><Check size={12} aria-hidden /> Matrícula verificada</Chip>
             </div>
           ))}
         </Card>

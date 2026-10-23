@@ -19,7 +19,7 @@ export interface Course {
   name: string;
   provider: string;
   duration: string;
-  color: string;
+  tone: "primary" | "progress" | "analysis" | "warning";
 }
 
 export interface Applicant {
@@ -34,5 +34,4 @@ export interface Applicant {
 export interface BarDatum {
   name: string;
   value: number;
-  color?: string;
 }

@@ -5,6 +5,7 @@ import { DEMO_COMPANY, JOBS } from "../../data/jobs";
 import { Card } from "../../components/ui/Card";
 import { Chip } from "../../components/ui/Chip";
 import { Button } from "../../components/ui/Button";
+import { ProgressBar } from "../../components/ui/ProgressBar";
 import { SectionTitle } from "../../components/ui/SectionTitle";
 import { HiringTimeline } from "./HiringTimeline";
 
@@ -36,7 +37,7 @@ export function CompanyView() {
                   <tr key={a.name} className="border-t border-line">
                     <td className="py-3 font-semibold">{a.name}</td><td>{a.university}</td>
                     <td className="text-muted">{a.career}</td><td><b>{a.match} %</b></td>
-                    <td><Chip tone={a.status === "Entrevista" ? "teal" : "neutral"}>{a.status}</Chip></td>
+                    <td><Chip tone={a.status === "Entrevista" ? "progress" : "neutral"}>{a.status}</Chip></td>
                   </tr>
                 ))}
               </tbody>
@@ -47,26 +48,26 @@ export function CompanyView() {
           <SectionTitle title="Acompañamiento de contratación activa" subtitle={`${ACTIVE_HIRE.name} · ${hireJob.title} · Mes ${ACTIVE_HIRE.month}`} />
           <div className="grid gap-6 sm:grid-cols-2">
             <HiringTimeline />
-            <div className="space-y-3 rounded-xl bg-soft p-4 text-sm">
+            <div className="space-y-3 rounded-xl bg-page p-4 text-sm">
               <div className="flex justify-between"><span className="text-muted">Salario mensual</span><b>{colones(toNumber(hireJob.salary))}</b></div>
               <div className="flex justify-between"><span className="text-muted">Subsidio recibido (meses 1–3)</span><b>{colones(subsidy)}</b></div>
               <div className="flex justify-between"><span className="text-muted">Bono permanencia (est.)</span><b>₡ 450.000</b></div>
-              <Chip tone="teal"><ShieldCheck size={12} /> Afiliación CCSS verificada</Chip>
+              <Chip tone="success"><ShieldCheck size={12} aria-hidden /> Afiliación CCSS verificada</Chip>
             </div>
           </div>
         </Card>
       </div>
       <div className="space-y-5">
-        <Card className="border-2 border-royal">
-          <div className="flex items-center gap-2 text-sm font-semibold text-royal"><Award size={18} /> Sello Empleador Joven</div>
+        <Card className="border-2 border-primary">
+          <div className="flex items-center gap-2 text-sm font-semibold text-primary"><Award size={18} aria-hidden /> Sello Empleador Joven</div>
           <div className="mt-3 text-4xl font-extrabold">78 <span className="text-base font-medium text-muted">puntos de preferencia</span></div>
           <p className="mt-1 text-sm text-muted">Nivel Oro · preferencia propuesta en compras públicas (SICOP)</p>
-          <div className="mt-4 h-2 rounded-full bg-soft"><div className="h-2 w-[78%] rounded-full bg-royal" /></div>
+          <ProgressBar className="mt-4" value={78} label="Avance hacia Nivel Platino" />
           <div className="mt-2 text-xs text-muted">22 puntos para Nivel Platino</div>
         </Card>
         <Card>
           <SectionTitle title="Verificación académica conectada" />
-          <div className="flex flex-wrap gap-2">{INSTITUTIONS.map((u) => <Chip key={u} tone="teal"><Check size={12} />{u}</Chip>)}</div>
+          <div className="flex flex-wrap gap-2">{INSTITUTIONS.map((u) => <Chip key={u} tone="success"><Check size={12} aria-hidden />{u}</Chip>)}</div>
           <p className="mt-3 text-xs text-muted">La plataforma verifica matrícula y avance de carrera con estas instituciones.</p>
         </Card>
         <Card>

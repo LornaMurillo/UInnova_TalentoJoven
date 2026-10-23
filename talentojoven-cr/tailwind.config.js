@@ -3,14 +3,20 @@ export default {
   content: ["./index.html", "./src/**/*.{ts,tsx}"],
   theme: {
     extend: {
+      // Paleta B5 de la auditoría. Es el único lugar con valores HEX; los componentes usan estos nombres.
       colors: {
-        ink: "#0F172A",
-        muted: "#64748B",
-        line: "#D6E0F5",
-        soft: "#F8FAFC",
-        royal: { DEFAULT: "#2563EB", dark: "#1D4ED8", soft: "#DBEAFE" },
-        indigo: { brand: "#6366F1" },
-        teal: { brand: "#0D9488", soft: "#D1FAE5", ink: "#047857" },
+        primary: { DEFAULT: "#2F63E9", strong: "#1D4ED8", soft: "#E8EEFD", text: "#1E4FD0" },
+        progress: { DEFAULT: "#0F7B6C", soft: "#E3F4F0", deco: "#16A085" }, // deco: solo decorativo o texto ≥ 24 px
+        analysis: { DEFAULT: "#6850D8", soft: "#EEEBFB" },
+        ink: "#202124", // texto
+        muted: "#5F6B7A", // texto secundario
+        page: "#F3F5F9", // fondo de página
+        surface: "#FFFFFF",
+        line: "#E5E7EB", // bordes decorativos
+        control: "#7A8394", // bordes de controles (≥ 3:1)
+        success: { DEFAULT: "#15803D", soft: "#DCFCE7" },
+        warning: { DEFAULT: "#B45309", soft: "#FEF3C7", text: "#92400E" },
+        error: { DEFAULT: "#B91C1C", soft: "#FEE2E2" },
       },
       fontFamily: {
         sans: ['"Public Sans"', "system-ui", "sans-serif"],
