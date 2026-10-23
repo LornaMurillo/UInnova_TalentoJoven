@@ -1,8 +1,9 @@
 import type { Course } from "../types";
 
+// tone elige el fondo del logo (ver StudentView); todos dan ≥ 4.5:1 con texto blanco.
 export const COURSES: Course[] = [
-  { name: "Cybersecurity Essentials", provider: "Cisco", duration: "30 h", color: "#0D9488" },
-  { name: "Google Data Analytics", provider: "Google", duration: "6 meses", color: "#2563EB" },
-  { name: "AWS Cloud Practitioner", provider: "AWS", duration: "20 h", color: "#D97706" },
-  { name: "Azure Fundamentals (AZ-900)", provider: "Microsoft", duration: "12 h", color: "#6366F1" },
+  { name: "Cybersecurity Essentials", provider: "Cisco", duration: "30 h", tone: "progress" },
+  { name: "Google Data Analytics", provider: "Google", duration: "6 meses", tone: "primary" },
+  { name: "AWS Cloud Practitioner", provider: "AWS", duration: "20 h", tone: "warning" },
+  { name: "Azure Fundamentals (AZ-900)", provider: "Microsoft", duration: "12 h", tone: "analysis" },
 ];

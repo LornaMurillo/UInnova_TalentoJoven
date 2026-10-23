@@ -3,16 +3,16 @@ import { Modal } from "../../components/ui/Modal";
 import { Button } from "../../components/ui/Button";
 
 const H = ({ children }: { children: string }) => (
-  <h4 className="mb-1 border-b border-slate-900 font-bold">{children}</h4>
+  <h4 className="mb-1 border-b border-ink font-bold">{children}</h4>
 );
 
 export function CvModal({ onClose }: { onClose: () => void }) {
   return (
     // El diálogo de impresión del navegador permite guardar como PDF; index.css deja solo el CV en la hoja.
     <Modal title="Vista previa · CV estándar Harvard" onClose={onClose} actions={<Button onClick={() => window.print()}><Download size={16} aria-hidden /> Guardar PDF</Button>}>
-      <article className="rounded-lg border border-slate-200 bg-white p-8 font-serif print:border-0 print:p-0 text-[13.5px] leading-relaxed text-slate-900">
+      <article className="rounded-lg border border-line bg-surface p-8 font-serif print:border-0 print:p-0 text-[13.5px] leading-relaxed text-ink">
         <h3 className="text-center text-2xl font-bold">Valeria Mora Campos</h3>
-        <p className="mb-4 text-center text-xs text-slate-600">San José, Costa Rica · valeria.mora@ejemplo.cr · linkedin.com/in/valeria-mora-ejemplo</p>
+        <p className="mb-4 text-center text-xs text-muted">San José, Costa Rica · valeria.mora@ejemplo.cr · linkedin.com/in/valeria-mora-ejemplo</p>
         <H>Educación</H>
         <p><b>Universidad de Costa Rica</b> — Licenciatura en Ingeniería en Computación (85 % completado) <span className="float-right">2021 – 2026</span></p>
         <p className="mb-3">Promedio ponderado 8,9 · Beca de excelencia académica</p>

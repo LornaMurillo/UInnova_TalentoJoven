@@ -25,10 +25,10 @@ export function JobCard({ job, applied, onApply }: Props) {
       </div>
       <div className="mt-3 flex flex-wrap gap-2">
         {job.requirements.map((r) => <Chip key={r} tone="neutral">{r}</Chip>)}
-        {job.hasSeal && <Chip tone="teal"><Award size={12} /> Sello Empleador Joven</Chip>}
+        {job.hasSeal && <Chip tone="primary"><Award size={12} aria-hidden /> Sello Empleador Joven</Chip>}
       </div>
-      <div className="mt-3 flex items-center gap-3 rounded-lg bg-soft p-3 text-sm">
-        <Users size={16} className="text-royal" />
+      <div className="mt-3 flex items-center gap-3 rounded-lg bg-page p-3 text-sm">
+        <Users size={16} className="flex-none text-primary" aria-hidden />
         <span><b>{job.previousHires} estudiantes</b> contratados por {job.company} en puestos de {job.area.toLowerCase()}.</span>
       </div>
       <Button className="mt-3" variant={applied ? "ghost" : "primary"} onClick={() => onApply(job.id)}>

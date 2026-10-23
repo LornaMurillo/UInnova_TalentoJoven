@@ -1,24 +1,24 @@
-import { Bar, BarChart, Cell, LabelList, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import { Bar, BarChart, LabelList, ResponsiveContainer, XAxis, YAxis } from "recharts";
 import type { BarDatum } from "../../types";
 
 interface Props {
   title: string;
   category: string;
   data: BarDatum[];
-  color?: string;
 }
 
 // El gráfico es solo visual; los lectores de pantalla leen la tabla oculta con los mismos datos.
-export function HiresChart({ title, category, data, color = "#6366F1" }: Props) {
+// Un solo color por gráfico: las barras toman el token analysis a través de currentColor.
+// Recharts pinta valores y ejes en un gris de 3.95:1; las clases los pasan a tokens.
+export function HiresChart({ title, category, data }: Props) {
   return (
     <>
-      <div className="h-64" aria-hidden="true">
+      <div className="h-64 text-analysis [&_.recharts-cartesian-axis-tick-value]:fill-muted [&_.recharts-label]:fill-ink" aria-hidden="true">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data} layout="vertical" margin={{ left: 8, right: 32 }}>
             <XAxis type="number" hide />
-            <YAxis type="category" dataKey="name" width={96} axisLine={false} tickLine={false} />
-            <Bar dataKey="value" radius={6} barSize={20}>
-              {data.map((d) => <Cell key={d.name} fill={d.color ?? color} />)}
+            <YAxis type="category" dataKey="name" width={112} axisLine={false} tickLine={false} />
+            <Bar dataKey="value" radius={6} barSize={20} fill="currentColor">
               <LabelList dataKey="value" position="right" />
             </Bar>
           </BarChart>

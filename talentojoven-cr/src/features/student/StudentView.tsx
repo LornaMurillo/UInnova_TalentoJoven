@@ -1,10 +1,12 @@
 import { useId, useState } from "react";
-import { Award, FileText, Link2, TrendingUp } from "lucide-react";
+import { Award, FileText, Link2 } from "lucide-react";
 import { COURSES } from "../../data/courses";
+import type { Course } from "../../types";
 import { AREAS, CONTRACTS } from "../../data/jobs";
 import { Card } from "../../components/ui/Card";
 import { Chip } from "../../components/ui/Chip";
 import { Button } from "../../components/ui/Button";
+import { ProgressBar } from "../../components/ui/ProgressBar";
 import { SectionTitle } from "../../components/ui/SectionTitle";
 import { cn } from "../../lib/cn";
 import { CvModal } from "./CvModal";
@@ -14,13 +16,15 @@ import { useJobFilters } from "./useJobFilters";
 // 72 de base + 7 por curso: con los 4 cursos el perfil llega a 100.
 const COURSE_POINTS = 7;
 
+const LOGO_BG: Record<Course["tone"], string> = { primary: "bg-primary", progress: "bg-progress", analysis: "bg-analysis", warning: "bg-warning" };
+
 // La etiqueta solo la lee el lector de pantalla; las opciones ("Todas", "Todos") no bastan como nombre.
 const Select = ({ label, value, onChange, options }: { label: string; value: string; onChange: (v: string) => void; options: string[] }) => {
   const id = useId();
   return (
     <>
       <label htmlFor={id} className="sr-only">{label}</label>
-      <select id={id} value={value} onChange={(e) => onChange(e.target.value)} className="rounded-lg border border-line bg-soft px-3 py-2 text-sm">
+      <select id={id} value={value} onChange={(e) => onChange(e.target.value)} className="rounded-lg border border-control bg-surface px-3 py-2 text-sm">
         {options.map((o) => <option key={o}>{o}</option>)}
       </select>
     </>
@@ -40,26 +44,22 @@ export function StudentView() {
       <div className="space-y-5">
         <Card>
           <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-indigo-brand font-bold text-white">VM</div>
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-analysis font-bold text-white" aria-hidden>VM</div>
             <div><div className="font-bold">Valeria Mora Campos</div><div className="text-sm text-muted">Estudiante · UCR</div></div>
           </div>
-          <div className="mt-4"><Chip tone="teal"><Link2 size={12} /> Conectado a eMatrícula UCR</Chip></div>
+          <div className="mt-4"><Chip tone="success"><Link2 size={12} aria-hidden /> Conectado a eMatrícula UCR</Chip></div>
           <p className="mt-3 text-sm">Licenciatura en Ingeniería en Computación</p>
           <div className="mt-2 flex justify-between text-sm"><span className="text-muted">Avance de carrera</span><b>85 %</b></div>
-          <div className="mt-1 h-2 rounded-full bg-soft"><div className="h-2 w-[85%] rounded-full bg-teal-brand" /></div>
+          <ProgressBar className="mt-1" value={85} label="Avance de carrera" tone="progress" />
           <p className="mt-3 text-xs text-muted">Compatible con UCR, TEC, UNA, UNED, UTN, CUC e INA. Datos verificados por la institución.</p>
         </Card>
 
         <Card>
-          <div className="flex items-end justify-between">
-            <div>
-              <div className="text-sm text-muted">Puntaje de perfil</div>
-              <div className="text-3xl font-extrabold">{score}<span className="text-base text-muted">/100</span></div>
-            </div>
-            <Chip tone="teal"><TrendingUp size={12} /> Verificado</Chip>
-          </div>
-          <div className="mt-3 h-2 rounded-full bg-soft"><div className="h-2 rounded-full bg-royal" style={{ width: `${score}%` }} /></div>
-          <Button className="mt-4 w-full justify-center" onClick={() => setShowCv(true)}><FileText size={16} /> Generar CV estándar Harvard</Button>
+          <div className="text-sm text-muted">Puntaje de perfil</div>
+          <div className="text-3xl font-extrabold">{score}<span className="text-base text-muted">/100</span></div>
+          <ProgressBar className="mt-3" value={score} label="Puntaje de perfil" />
+          <p className="mt-2 text-xs text-muted">72 puntos base por tu perfil académico verificado, más {COURSE_POINTS} por cada curso en el que te inscribes.</p>
+          <Button className="mt-4 w-full justify-center" onClick={() => setShowCv(true)}><FileText size={16} aria-hidden /> Generar CV estándar Harvard</Button>
         </Card>
 
         <Card>
@@ -67,11 +67,11 @@ export function StudentView() {
           <div className="space-y-3">
             {COURSES.map((c) => (
               <div key={c.name} className="flex items-start gap-3">
-                <div className="flex h-9 w-9 flex-none items-center justify-center rounded-lg text-xs font-bold text-white" style={{ background: c.color }}>{c.provider[0]}</div>
+                <div className={cn("flex h-9 w-9 flex-none items-center justify-center rounded-lg text-xs font-bold text-white", LOGO_BG[c.tone])} aria-hidden>{c.provider[0]}</div>
                 <div className="min-w-0 flex-1">
                   <div className="text-sm font-semibold">{c.name}</div>
                   <div className="text-xs text-muted">{c.provider} · {c.duration}</div>
-                  <Chip tone="teal">+{COURSE_POINTS} pts en tu perfil</Chip>
+                  <Chip tone="progress">+{COURSE_POINTS} pts en tu perfil</Chip>
                 </div>
                 <Button variant={started.has(c.name) ? "ghost" : "primary"} onClick={() => setStarted((s) => add(s, c.name))}>
                   {started.has(c.name) ? "Inscrita" : "Iniciar"}
@@ -90,9 +90,9 @@ export function StudentView() {
           <button
             aria-pressed={f.sealOnly}
             onClick={() => f.setSealOnly(!f.sealOnly)}
-            className={cn("inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-sm font-semibold", f.sealOnly ? "bg-royal text-white" : "border border-line bg-soft")}
+            className={cn("inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-sm font-semibold", f.sealOnly ? "border border-primary bg-primary text-white" : "border border-control bg-surface")}
           >
-            <Award size={16} /> Sello Empleador Joven
+            <Award size={16} aria-hidden /> Sello Empleador Joven
           </button>
         </div>
         <div className="space-y-3">
