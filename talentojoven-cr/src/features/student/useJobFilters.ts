@@ -17,5 +17,11 @@ export function useJobFilters() {
     [area, contract, sealOnly]
   );
 
-  return { jobs, area, setArea, contract, setContract, sealOnly, setSealOnly };
+  const reset = () => {
+    setArea("Todas");
+    setContract("Todos");
+    setSealOnly(false);
+  };
+
+  return { jobs, area, setArea, contract, setContract, sealOnly, setSealOnly, reset };
 }

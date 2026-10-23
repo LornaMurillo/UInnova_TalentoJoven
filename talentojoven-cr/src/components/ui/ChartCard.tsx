@@ -1,18 +1,22 @@
 import { Bar, BarChart, LabelList, ResponsiveContainer, XAxis, YAxis } from "recharts";
 import type { BarDatum } from "../../types";
+import { Card } from "./Card";
+import { SectionTitle } from "./SectionTitle";
 
 interface Props {
   title: string;
-  category: string;
+  category: string; // encabezado de la primera columna de la tabla
+  valueLabel?: string;
   data: BarDatum[];
 }
 
+// Barras horizontales con un solo color (token analysis vía currentColor).
 // El gráfico es solo visual; los lectores de pantalla leen la tabla oculta con los mismos datos.
-// Un solo color por gráfico: las barras toman el token analysis a través de currentColor.
 // Recharts pinta valores y ejes en un gris de 3.95:1; las clases los pasan a tokens.
-export function HiresChart({ title, category, data }: Props) {
+export function ChartCard({ title, category, valueLabel = "Contrataciones", data }: Props) {
   return (
-    <>
+    <Card>
+      <SectionTitle title={title} />
       <div className="h-64 text-analysis [&_.recharts-cartesian-axis-tick-value]:fill-muted [&_.recharts-label]:fill-ink" aria-hidden="true">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data} layout="vertical" margin={{ left: 8, right: 32 }}>
@@ -26,11 +30,11 @@ export function HiresChart({ title, category, data }: Props) {
       </div>
       <table className="sr-only">
         <caption>{title}</caption>
-        <thead><tr><th scope="col">{category}</th><th scope="col">Contrataciones</th></tr></thead>
+        <thead><tr><th scope="col">{category}</th><th scope="col">{valueLabel}</th></tr></thead>
         <tbody>
           {data.map((d) => <tr key={d.name}><th scope="row">{d.name}</th><td>{d.value}</td></tr>)}
         </tbody>
       </table>
-    </>
+    </Card>
   );
 }

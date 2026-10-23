@@ -2,17 +2,15 @@ import { useState } from "react";
 import { Award, Check, ShieldCheck } from "lucide-react";
 import { ACTIVE_HIRE, APPLICANTS, INSTITUTIONS } from "../../data/stats";
 import { DEMO_COMPANY, JOBS } from "../../data/jobs";
+import { RETENTION_BONUS, SEAL, SUBSIDY_RATES } from "../../data/program";
 import { Card } from "../../components/ui/Card";
 import { Chip } from "../../components/ui/Chip";
 import { Button } from "../../components/ui/Button";
 import { ProgressBar } from "../../components/ui/ProgressBar";
 import { SectionTitle } from "../../components/ui/SectionTitle";
+import { StatusBadge } from "../../components/ui/StatusBadge";
+import { colones, toNumber } from "../../lib/format";
 import { HiringTimeline } from "./HiringTimeline";
-
-// Mismo esquema que HiringTimeline: 60 % → 40 % → 20 % del salario en los meses 1–3.
-const SUBSIDY_RATES = [0.6, 0.4, 0.2];
-const toNumber = (salary: string) => Number(salary.replace(/\D/g, ""));
-const colones = (n: number) => `₡ ${String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
 
 export function CompanyView() {
   const vacancies = JOBS.filter((j) => j.company === DEMO_COMPANY);
@@ -37,7 +35,7 @@ export function CompanyView() {
                   <tr key={a.name} className="border-t border-line">
                     <td className="py-3 font-semibold">{a.name}</td><td>{a.university}</td>
                     <td className="text-muted">{a.career}</td><td><b>{a.match} %</b></td>
-                    <td><Chip tone={a.status === "Entrevista" ? "progress" : "neutral"}>{a.status}</Chip></td>
+                    <td><StatusBadge status={a.status} /></td>
                   </tr>
                 ))}
               </tbody>
@@ -51,7 +49,7 @@ export function CompanyView() {
             <div className="space-y-3 rounded-xl bg-page p-4 text-sm">
               <div className="flex justify-between"><span className="text-muted">Salario mensual</span><b>{colones(toNumber(hireJob.salary))}</b></div>
               <div className="flex justify-between"><span className="text-muted">Subsidio recibido (meses 1–3)</span><b>{colones(subsidy)}</b></div>
-              <div className="flex justify-between"><span className="text-muted">Bono permanencia (est.)</span><b>₡ 450.000</b></div>
+              <div className="flex justify-between"><span className="text-muted">Bono permanencia (est.)</span><b>{colones(RETENTION_BONUS)}</b></div>
               <Chip tone="success"><ShieldCheck size={12} aria-hidden /> Afiliación CCSS verificada</Chip>
             </div>
           </div>
@@ -60,10 +58,10 @@ export function CompanyView() {
       <div className="space-y-5">
         <Card className="border-2 border-primary">
           <div className="flex items-center gap-2 text-sm font-semibold text-primary"><Award size={18} aria-hidden /> Sello Empleador Joven</div>
-          <div className="mt-3 text-4xl font-extrabold">78 <span className="text-base font-medium text-muted">puntos de preferencia</span></div>
-          <p className="mt-1 text-sm text-muted">Nivel Oro · preferencia propuesta en compras públicas (SICOP)</p>
-          <ProgressBar className="mt-4" value={78} label="Avance hacia Nivel Platino" />
-          <div className="mt-2 text-xs text-muted">22 puntos para Nivel Platino</div>
+          <div className="mt-3 text-4xl font-extrabold">{SEAL.points} <span className="text-base font-medium text-muted">puntos de preferencia</span></div>
+          <p className="mt-1 text-sm text-muted">Nivel {SEAL.level} · preferencia propuesta en compras públicas (SICOP)</p>
+          <ProgressBar className="mt-4" value={SEAL.points} label={`Avance hacia Nivel ${SEAL.nextLevel}`} />
+          <div className="mt-2 text-xs text-muted">{SEAL.nextLevelPoints - SEAL.points} puntos para Nivel {SEAL.nextLevel}</div>
         </Card>
         <Card>
           <SectionTitle title="Verificación académica conectada" />
