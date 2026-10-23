@@ -28,6 +28,7 @@ export interface Applicant {
   career: string;
   status: "Nueva" | "Revisión" | "Entrevista";
   match: number;
+  jobId: number;
 }
 
 export interface BarDatum {
