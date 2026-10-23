@@ -1,3 +1,4 @@
+import { Download } from "lucide-react";
 import { Modal } from "../../components/ui/Modal";
 import { Button } from "../../components/ui/Button";
 
@@ -7,8 +8,9 @@ const H = ({ children }: { children: string }) => (
 
 export function CvModal({ onClose }: { onClose: () => void }) {
   return (
-    <Modal title="Vista previa · CV estándar Harvard" onClose={onClose} actions={<Button>Descargar PDF</Button>}>
-      <article className="rounded-lg border border-slate-200 bg-white p-8 font-serif text-[13.5px] leading-relaxed text-slate-900">
+    // El diálogo de impresión del navegador permite guardar como PDF; index.css deja solo el CV en la hoja.
+    <Modal title="Vista previa · CV estándar Harvard" onClose={onClose} actions={<Button onClick={() => window.print()}><Download size={16} aria-hidden /> Guardar PDF</Button>}>
+      <article className="rounded-lg border border-slate-200 bg-white p-8 font-serif print:border-0 print:p-0 text-[13.5px] leading-relaxed text-slate-900">
         <h3 className="text-center text-2xl font-bold">Valeria Mora Campos</h3>
         <p className="mb-4 text-center text-xs text-slate-600">San José, Costa Rica · valeria.mora@ejemplo.cr · linkedin.com/in/valeria-mora-ejemplo</p>
         <H>Educación</H>
